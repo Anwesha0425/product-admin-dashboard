@@ -1,4 +1,4 @@
-﻿import type { Metadata } from 'next';
+import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className="dark">
-      <body className={`${inter.className} bg-slate-900 text-slate-100 antialiased`}>
+      <body className={`${inter.className} antialiased`} style={{ backgroundColor: '#1c1007', color: '#fde8c8' }}>
         {children}
       </body>
     </html>

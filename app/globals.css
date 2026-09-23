@@ -1,8 +1,8 @@
-﻿@import "tailwindcss";
+@import "tailwindcss";
 
 :root {
-  --background: #0f172a;
-  --foreground: #f1f5f9;
+  --background: #1c1007;
+  --foreground: #fde8c8;
 }
 
 * {
@@ -14,21 +14,11 @@ body {
   color: var(--foreground);
 }
 
-/* Smooth scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-::-webkit-scrollbar-track {
-  background: #1e293b;
-}
-::-webkit-scrollbar-thumb {
-  background: #475569;
-  border-radius: 9999px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #6366f1;
-}
+/* Autumn scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #2a1a0a; }
+::-webkit-scrollbar-thumb { background: #5a3518; border-radius: 9999px; }
+::-webkit-scrollbar-thumb:hover { background: #d97706; }
 
 /* Line clamp utility */
 .line-clamp-1 {
@@ -38,9 +28,15 @@ body {
   -webkit-line-clamp: 1;
 }
 
-/* Smooth transitions everywhere */
+/* Smooth transitions */
 * {
   transition-property: color, background-color, border-color, opacity, box-shadow, transform;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
+}
+
+/* Autumn select option styling */
+select option {
+  background-color: #2a1a0a;
+  color: #fde8c8;
 }

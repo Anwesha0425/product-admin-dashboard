@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { Suspense, useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -41,29 +41,32 @@ function ProductsPageInner() {
   const total = data?.total ?? 0;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
+    <div className="min-h-screen" style={{ backgroundColor: '#1c1007' }}>
       {/* Top nav */}
-      <header className="sticky top-0 z-40 border-b border-slate-800 bg-slate-900/80 backdrop-blur-sm">
+      <header className="sticky top-0 z-40" style={{ backgroundColor: '#2a1a0aee', borderBottom: '1px solid #4a2e10', backdropFilter: 'blur(8px)' }}>
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6">
           <div className="flex items-center gap-3">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-600">
-              <svg className="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg" style={{ backgroundColor: '#d97706' }}>
+              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" style={{ color: '#1c1007' }}>
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                   d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
               </svg>
             </div>
-            <h1 className="text-base font-semibold text-white">Product Admin</h1>
+            <h1 className="text-base font-semibold" style={{ color: '#fde8c8' }}>Product Admin</h1>
           </div>
           <div className="flex items-center gap-3">
             {user && (
-              <span className="hidden text-sm text-slate-400 sm:block">
+              <span className="hidden text-sm sm:block" style={{ color: '#a07850' }}>
                 {user.firstName} {user.lastName}
               </span>
             )}
             <button
               id="logout-btn"
               onClick={logout}
-              className="rounded-lg border border-slate-700 px-3 py-1.5 text-sm text-slate-300 transition hover:bg-slate-800 hover:text-white"
+              className="rounded-lg px-3 py-1.5 text-sm transition"
+              style={{ border: '1px solid #5a3518', color: '#c8a060' }}
+              onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#361f0c'; e.currentTarget.style.color = '#fde8c8'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = '#c8a060'; }}
             >
               Logout
             </button>
@@ -73,17 +76,13 @@ function ProductsPageInner() {
 
       <main className="mx-auto max-w-7xl px-4 py-6 sm:px-6">
         {/* CRUD persistence banner */}
-        <div className="mb-4 rounded-xl bg-amber-900/30 border border-amber-700/40 px-4 py-2.5 text-xs text-amber-300">
+        <div className="mb-4 rounded-xl px-4 py-2.5 text-xs" style={{ backgroundColor: '#3b1f0a', border: '1px solid #7c4a1a', color: '#f5c07a' }}>
           ℹ️ Add / Edit / Delete changes are stored locally and will reset on page refresh — the DummyJSON API does not persist writes.
         </div>
 
         {/* Toolbar */}
         <div className="mb-4 flex flex-wrap items-center gap-3">
-          <SearchBar
-            value={q}
-            onChange={(v) => setParam('q', v)}
-            disabled={!!category}
-          />
+          <SearchBar value={q} onChange={(v) => setParam('q', v)} disabled={!!category} />
           <FilterSort
             category={category}
             sortBy={sortBy}
@@ -96,7 +95,10 @@ function ProductsPageInner() {
           <button
             id="add-product-btn"
             onClick={() => { setEditTarget(null); setFormOpen(true); }}
-            className="ml-auto flex items-center gap-2 rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-indigo-900/30 transition hover:bg-indigo-500"
+            className="ml-auto flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition"
+            style={{ backgroundColor: '#d97706', color: '#1c1007' }}
+            onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#b45309'; }}
+            onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#d97706'; }}
           >
             <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -117,7 +119,6 @@ function ProductsPageInner() {
         )}
         {!loading && !error && displayProducts.length > 0 && (
           <>
-            {/* Desktop table */}
             <div className="hidden md:block">
               <ProductTable
                 products={displayProducts}
@@ -125,7 +126,6 @@ function ProductsPageInner() {
                 onDelete={(p) => setDeleteTarget(p)}
               />
             </div>
-            {/* Mobile cards */}
             <div className="grid gap-4 sm:grid-cols-2 md:hidden">
               {displayProducts.map((p) => (
                 <ProductCard
@@ -139,7 +139,6 @@ function ProductsPageInner() {
           </>
         )}
 
-        {/* Pagination */}
         {!loading && !error && total > 0 && (
           <div className="mt-6">
             <Pagination
@@ -153,28 +152,15 @@ function ProductsPageInner() {
         )}
       </main>
 
-      {/* Add/Edit modal */}
-      <Modal
-        isOpen={formOpen}
-        onClose={() => setFormOpen(false)}
-        title={editTarget ? 'Edit Product' : 'Add Product'}
-      >
+      <Modal isOpen={formOpen} onClose={() => setFormOpen(false)} title={editTarget ? 'Edit Product' : 'Add Product'}>
         <ProductForm
           product={editTarget}
-          onSuccess={(saved, isNew) => {
-            applyOverride(isNew ? 'add' : 'edit', saved);
-            setFormOpen(false);
-          }}
+          onSuccess={(saved, isNew) => { applyOverride(isNew ? 'add' : 'edit', saved); setFormOpen(false); }}
           onCancel={() => setFormOpen(false)}
         />
       </Modal>
 
-      {/* Delete confirm modal */}
-      <Modal
-        isOpen={!!deleteTarget}
-        onClose={() => setDeleteTarget(null)}
-        title="Confirm Delete"
-      >
+      <Modal isOpen={!!deleteTarget} onClose={() => setDeleteTarget(null)} title="Confirm Delete">
         {deleteTarget && (
           <DeleteConfirm
             product={deleteTarget}
@@ -190,7 +176,7 @@ function ProductsPageInner() {
 export default function ProductsPage() {
   return (
     <Suspense fallback={
-      <div className="flex min-h-screen items-center justify-center">
+      <div className="flex min-h-screen items-center justify-center" style={{ backgroundColor: '#1c1007' }}>
         <Spinner size="lg" />
       </div>
     }>

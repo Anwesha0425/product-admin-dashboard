@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { useRef, useState } from 'react';
 import type { Product } from '@/types';
@@ -32,15 +32,18 @@ export default function DeleteConfirm({ product, onConfirm, onCancel }: Props) {
 
   return (
     <div className="space-y-4">
-      <p className="text-slate-300">
+      <p style={{ color: '#a07850' }}>
         Are you sure you want to delete{' '}
-        <span className="font-semibold text-white">{product.title}</span>?
+        <span className="font-semibold" style={{ color: '#fde8c8' }}>{product.title}</span>?
         This action cannot be undone.
       </p>
       <div className="flex gap-3">
         <button
           onClick={onCancel}
-          className="flex-1 rounded-xl border border-slate-700 py-2.5 text-sm font-medium text-slate-300 transition hover:bg-slate-700"
+          className="flex-1 rounded-xl py-2.5 text-sm font-medium transition"
+          style={{ border: '1px solid #5a3518', color: '#c8a060' }}
+          onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#361f0c'; }}
+          onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; }}
         >
           Cancel
         </button>
@@ -48,7 +51,10 @@ export default function DeleteConfirm({ product, onConfirm, onCancel }: Props) {
           id="confirm-delete"
           onClick={handleDelete}
           disabled={loading}
-          className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-red-600 py-2.5 text-sm font-semibold text-white transition hover:bg-red-500 disabled:opacity-60"
+          className="flex flex-1 items-center justify-center gap-2 rounded-xl py-2.5 text-sm font-semibold text-white transition"
+          style={{ backgroundColor: '#dc2626', opacity: loading ? 0.6 : 1 }}
+          onMouseEnter={(e) => { if (!loading) e.currentTarget.style.backgroundColor = '#b91c1c'; }}
+          onMouseLeave={(e) => { if (!loading) e.currentTarget.style.backgroundColor = '#dc2626'; }}
         >
           {loading ? <Spinner size="sm" /> : null}
           Delete
